@@ -1,21 +1,23 @@
-"""
+class IntField:
+    fields: dict[str, int] = {}
+    
+    def __init__(self, name) -> None:
+        self.name = name
+        self.fields[name] = None
+        
+    def __set__(self, obj, value: int):
+        if value is None or isinstance(value, int):
+            self.fields[self.name] = value
+        else:
+            raise ValueError("value must be int type")
+        
+    def __get__(self, obj, type = None):
+        return self.fields[self.name]
+    
 
-This is a sample Python script.
-
-Press Shift+F10 to execute it or replace it with your code.
-Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.//
-
-"""
-
-
-def print_hi(name: str) -> None:
-    """Use a breakpoint in the code line below to debug your script."""
-    print(f"Hi, {name}...")  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == "__main__":
-    print_hi("PyCharm")
-
-# check GH codespaces git push
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+class Demo:
+    field = IntField("field1")
+    other = IntField("field2")
+    
+    def __init__(self, int_value) -> None:
+        self.field = int_value
